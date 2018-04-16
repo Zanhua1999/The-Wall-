@@ -1,0 +1,81 @@
+<!DOCTYPE html>>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<link rel="stylesheet" href="iconfont/iconfont.css" type="text/css" />
+
+<link rel="stylesheet" href="css/index.css" type="text/css" />
+<link rel="stylesheet" href="css/animate.css" type="text/css" />
+<title>Like functie</title>
+</head>
+<body>
+<div class="box">
+    <h1>Afbeelding</h1>
+    <div class="content">
+<img src="img2.jpg" alt="Blue sky" height="420" width="420">
+    </div>
+</div>
+<div class="opera">
+    <span id="btn">
+        <i class="iconfont">&#xe602;</i> Click
+    </span>
+</div>
+<script src="js/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+(function ($) {
+    $.extend({
+        tipsBox: function (options) {
+            options = $.extend({
+                obj: null,
+                str: "+1",
+                startSize: "12px",
+                endSize: "30px",
+                interval: 600,
+                color: "red",
+                callback: function () { }  
+            }, options);
+            $("body").append("<span class='num'>" + options.str + "</span>");
+            var box = $(".num");
+            var left = options.obj.offset().left + options.obj.width() / 2;
+            var top = options.obj.offset().top - options.obj.height();
+            box.css({
+                "position": "absolute",
+                "left": left + "px",
+                "top": top + "px",
+                "z-index": 9999,
+                "font-size": options.startSize,
+                "line-height": options.endSize,
+                "color": options.color
+            });
+            box.animate({
+                "font-size": options.endSize,
+                "opacity": "0",
+                "top": top - parseInt(options.endSize) + "px"
+            }, options.interval, function () {
+                box.remove();
+                options.callback();
+            });
+        }
+    });
+})(jQuery);
+function niceIn(prop){
+    prop.find('i').addClass('niceIn');
+    setTimeout(function(){
+        prop.find('i').removeClass('niceIn');
+    },1000);
+}
+$(function () {
+    $("#btn").click(function () {
+        $.tipsBox({
+            obj: $(this),
+            str: "+1",
+            callback: function () {
+            }
+        });
+        niceIn($(this));
+    });
+});
+</script>
+</body>
+</html>
